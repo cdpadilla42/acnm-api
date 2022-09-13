@@ -6,12 +6,14 @@ import Cors from 'cors';
 // Initializing the cors middleware
 // You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
 const cors = Cors({
-  methods: ['POST', 'GET', 'HEAD'],
+  methods: ['POST', 'GET', 'HEAD', 'OPTIONS'],
   origin: [
     // 'http://localhost:3001',
     'https://acmurdermystery.netlify.app/',
     'https://acnewmurder.com/',
   ],
+  credentials: true,
+  preflightContinue: true,
 });
 
 // Helper method to wait for a middleware to execute before continuing

@@ -9,8 +9,8 @@ const cors = Cors({
   methods: ['POST', 'GET', 'HEAD', 'OPTIONS'],
   origin: [
     // 'http://localhost:3001',
-    'https://acmurdermystery.netlify.app/',
-    'https://acnewmurder.com/',
+    'https://acmurdermystery.netlify.app',
+    'https://acnewmurder.com',
   ],
   credentials: true,
   preflightContinue: true,

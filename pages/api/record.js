@@ -12,8 +12,8 @@ const cors = Cors({
     'https://acmurdermystery.netlify.app',
     'https://acnewmurder.com',
   ],
-  credentials: true,
-  preflightContinue: true,
+  // credentials: true,
+  // preflightContinue: true,
 });
 
 // Helper method to wait for a middleware to execute before continuing

@@ -1,19 +1,10 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-
 import { connectToDatabase } from '../../lib/mongodb';
 import Cors from 'cors';
 
 // Initializing the cors middleware
-// You can read more about the available options here: https://github.com/expressjs/cors#configuration-options
 const cors = Cors({
   methods: ['POST', 'GET', 'HEAD', 'OPTIONS'],
-  origin: [
-    // 'http://localhost:3001',
-    'https://acmurdermystery.netlify.app',
-    'https://acnewmurder.com',
-  ],
-  // credentials: true,
-  // preflightContinue: true,
+  origin: ['https://acmurdermystery.netlify.app', 'https://acnewmurder.com'],
 });
 
 // Helper method to wait for a middleware to execute before continuing
@@ -35,8 +26,6 @@ export default async function handler(req, res) {
 
   if (req.method === 'POST') {
     const { client, db } = await connectToDatabase();
-    // Process a POST request
-    console.log(req.body.type);
 
     const myObj = {
       date: new Date(),
@@ -50,8 +39,6 @@ export default async function handler(req, res) {
         console.log('1 document inserted');
         await client.close();
       });
-
-    console.log(dbRes);
 
     res.status(200).json({ message: 'Data recorded' });
   } else {

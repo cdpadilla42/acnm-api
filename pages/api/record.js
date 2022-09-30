@@ -42,7 +42,7 @@ export default async function handler(req, res) {
 
     res.status(200).json({ message: 'Data recorded' });
   } else {
-    res.status(200).json({ name: 'Big Chungus' });
+    res.status(200).json({ name: 'Ready to record' });
   }
 
   return res;

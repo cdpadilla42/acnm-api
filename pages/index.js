@@ -3,7 +3,8 @@ import Image from 'next/image';
 import { connectToDatabase } from '../lib/mongodb';
 import styles from '../styles/Home.module.css';
 
-export default function Home({ count }) {
+export default function Home({ counts }) {
+  console.log(counts);
   return (
     <div className={styles.container}>
       <Head>
@@ -14,8 +15,11 @@ export default function Home({ count }) {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          {count} people have started the game since release
+          {counts.play} people have started the game since release
         </h1>
+        <h2>{counts['start act 3']} people started act 3</h2>
+        <h3>{counts['start act three trial']} people started act 3 trial</h3>
+        <h4>{counts.complete} people completed the game!</h4>
       </main>
     </div>
   );
@@ -25,8 +29,37 @@ export async function getServerSideProps({ params }) {
   const { db } = await connectToDatabase();
   const query = { date: { $gte: new Date('2022-09-30T01:15:01.119+00:00') } };
   const projection = { type: 1 };
-  const dbRes = await db.collection('acnm').find(query, projection).count();
-  const count = dbRes;
+  const aggregation = [
+    {
+      $match: {
+        date: {
+          $gte: new Date('Fri, 30 Sep 2022 01:15:01 GMT'),
+        },
+      },
+    },
+    {
+      $group: {
+        _id: '$type',
+        count: {
+          $sum: 1,
+        },
+      },
+    },
+  ];
 
-  return { props: { count } };
+  const dbRes = await db.collection('acnm').aggregate(aggregation);
+  // const counts = JSON.stringify(dbRes);
+  const res = [];
+  for await (const doc of dbRes) {
+    res.push(doc);
+  }
+
+  const countsObj = {};
+  for (const countObj of res) {
+    if (countObj._id) {
+      countsObj[countObj._id] = countObj.count;
+    }
+  }
+
+  return { props: { counts: countsObj } };
 }

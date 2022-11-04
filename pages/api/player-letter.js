@@ -7,8 +7,6 @@ const cors = Cors({
   origin: ['https://acmurdermystery.netlify.app', 'https://acnewmurder.com'],
 });
 
-const { client, db } = await connectToDatabase();
-
 // Helper method to wait for a middleware to execute before continuing
 // And to throw an error when an error happens in a middleware
 function runMiddleware(req, res, fn) {
@@ -25,6 +23,7 @@ function runMiddleware(req, res, fn) {
 
 export default async function handler(req, res) {
   await runMiddleware(req, res, cors);
+  const { client, db } = await connectToDatabase();
 
   if (req.method === 'POST') {
     const myObj = {

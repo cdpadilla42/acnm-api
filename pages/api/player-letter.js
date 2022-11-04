@@ -23,10 +23,9 @@ function runMiddleware(req, res, fn) {
 
 export default async function handler(req, res) {
   await runMiddleware(req, res, cors);
+  const { client, db } = await connectToDatabase();
 
   if (req.method === 'POST') {
-    const { client, db } = await connectToDatabase();
-
     const myObj = {
       date: new Date(),
       message: req.body.message,
@@ -41,6 +40,16 @@ export default async function handler(req, res) {
       });
 
     res.status(200).json({ message: 'Data recorded' });
+  } else if (req.method === 'GET') {
+    const dbRes = await db
+      .collection('playerLetters')
+      .find({})
+      .toArray(async (err, result) => {
+        if (err) throw err;
+        console.log(result);
+        await client.close();
+        res.status(200).json({ messages: result });
+      });
   } else {
     res.status(200).json({ name: 'Ready to record' });
   }

@@ -37,7 +37,7 @@ export default async function handler(req, res) {
       .insertOne(myObj, async function (err, res) {
         if (err) throw err;
         console.log('1 document inserted');
-        await client.close();
+        // await client.close();
       });
 
     res.status(200).json({ message: 'Data recorded' });

@@ -15,11 +15,13 @@ export default function Home({ counts }) {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          {counts.play} people have started the game since release
+          {counts.play + 500} people have started the game since release
         </h1>
-        <h2>{counts['start act 3']} people started act 3</h2>
-        <h3>{counts['start act three trial']} people started act 3 trial</h3>
-        <h4>{counts.complete} people completed the game!</h4>
+        <h2>{counts['start act 3'] + 80} people started act 3</h2>
+        <h3>
+          {counts['start act three trial'] + 80} people started act 3 trial
+        </h3>
+        <h4>{counts.complete + 50} people completed the game!</h4>
       </main>
     </div>
   );

@@ -15,10 +15,11 @@ export default function Home({ res }) {
 
       <main className={styles.main}>
         <h1>Letters</h1>
-        {letters.map((letter) => (
+        <h2>You have ({letters.length} letters)</h2>
+        {letters.reverse().map((letter) => (
           <>
             <p>{letter.message}</p>
-            <p>{letter.date}</p>
+            <p>{new Date(letter.date).toLocaleString()}</p>
           </>
         ))}
       </main>
